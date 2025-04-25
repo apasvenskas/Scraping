@@ -1,5 +1,9 @@
 import requests
 import selectorlib
+import time
+import smtplib, ssl
+
+"INSERT INTO events VALUES ('Tigers', 'Tiger City', '1988.10.14)" # this sql query and will be excuted by python.
 
 
 URL = "https://programmer100.pythonanywhere.com/tours/"
