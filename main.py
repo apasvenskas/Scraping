@@ -25,3 +25,10 @@ if __name__ == "__main__":
     scraped = scrape(URL)
     extrated = extract(scraped)
     print(extrated)
+
+def send_email():
+    print("Email was sent")
+
+def store(extraction):
+    with open("Data", "w") as file:
+        file.write(extraction + "\n")
