@@ -2,9 +2,12 @@ import requests
 import selectorlib
 import time
 import smtplib, ssl
+import os
+from dotenv import load_dotenv
 
 "INSERT INTO events VALUES ('Tigers', 'Tiger City', '1988.10.14)" # this sql query and will be excuted by python.
 
+load_dotenv()
 
 URL = "https://programmer100.pythonanywhere.com/tours/"
 HEADERS = {
@@ -26,8 +29,26 @@ if __name__ == "__main__":
     extrated = extract(scraped)
     print(extrated)
 
-def send_email():
-    print("Email was sent")
+def send_email(message):
+    host = "smtp.gmail.com"
+    port = 465
+
+    password = os.getenv("PASSWORD")
+    username = "audrius13toto@gmail.com"
+    receiver = "audrius13toto@gmail.com"
+
+    if not password:
+        print("No password found in environment variables!")
+        return
+
+    receiver = "audrius13toto@gmail.com"
+    my_context = ssl.create_default_context()
+
+    
+    with smtplib.SMTP_SSL(host, port, context=my_context) as server:
+        server.login(username, password)
+        server.sendmail(username, receiver, message)
+        print("Email sent successfully!")
 
 def store(extraction):
     with open("data.txt", "a") as file:
@@ -45,4 +66,4 @@ if __name__ == "__main__":
     if extracted != "No upcoming tours":
         if extrated not in content:
             store(extracted)
-            send_email()
+            send_email(message="Hey, new event was found!")
