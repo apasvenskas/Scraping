@@ -5,6 +5,8 @@ import smtplib, ssl
 import os
 from dotenv import load_dotenv
 
+db_file = "data.db"
+
 "INSERT INTO events VALUES ('Tigers', 'Tiger City', '1988.10.14)" # this sql query and will be excuted by python.
 
 load_dotenv()
@@ -59,11 +61,14 @@ def read(extracted):
         return file.read()
 
 if __name__ == "__main__":
-    scraped = scrape(URL)
-    extracted = extract(scraped)
-    print(extracted) 
-    content = read(extracted)
-    if extracted != "No upcoming tours":
-        if extrated not in content:
-            store(extracted)
-            send_email(message="Hey, new event was found!")
+    while True:
+
+        scraped = scrape(URL)
+        extracted = extract(scraped)
+        print(extracted) 
+        content = read(extracted)
+        if extracted != "No upcoming tours":
+            if extrated not in content:
+                store(extracted)
+                send_email(message="Hey, new event was found!")
+        time.sleep(2) # keeps the script running non stop, evry 2 seconds
