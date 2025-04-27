@@ -30,5 +30,19 @@ def send_email():
     print("Email was sent")
 
 def store(extraction):
-    with open("Data", "w") as file:
+    with open("data.txt", "a") as file:
         file.write(extraction + "\n")
+
+def read(extracted):
+    with open("data.txt", "r") as file:
+        return file.read()
+
+if __name__ == "__main__":
+    scraped = scrape(URL)
+    extracted = extract(scraped)
+    print(extracted) 
+    content = read(extracted)
+    if extracted != "No upcoming tours":
+        if extrated not in content:
+            store(extracted)
+            send_email()
